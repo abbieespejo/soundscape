@@ -5,6 +5,12 @@
   scroll-snap-type: y mandatory;
 }
 
+#app-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
 .full-vh {
   height: 100vh;
   scroll-snap-align: start;
@@ -36,6 +42,10 @@
 /* App.css */
 body {
   font-family: 'Poppins', sans-serif;
-  font-weight: 400;
-  background-color: #f5ebe0;
+  margin: 0;
+  padding: 0;
+ 
 }
+
+
+
