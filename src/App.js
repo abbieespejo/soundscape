@@ -32,7 +32,7 @@ const DotNavigation = ({ sectionNames, activeSection, setActiveSection }) => {
 };
 
 const App = () => {
-  const sectionNames = ['Section 1', 'Section 2', 'Section 3'];
+  const sectionNames = ['Section', 'Section 2', 'Section 3'];
   const [activeSection, setActiveSection] = useState(0);
 
   const onScroll = (e) => {

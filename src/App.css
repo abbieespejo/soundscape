@@ -32,3 +32,10 @@
 .dot.active {
   background: black;
 }
+
+/* App.css */
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  background-color: #f5ebe0;
+}
