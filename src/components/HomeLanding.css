@@ -1,59 +1,125 @@
-.landing-box {
-    height: 100vh;
-    width: 100%;
-    padding: 30px;
-    background: radial-gradient(circle, #4b917d, #f037a5, #cdf564);
-    background-size: 200% 200%;
-    animation: gradient 5s ease infinite alternate;
+.gradient-box {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background: radial-gradient(circle, #4b917d, #f037a5, #cdf564);
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite alternate;
 }
 
 @keyframes gradient {
-    0% {
-        background-position: 0% 0%;
-    }
+  0% {
+    background-position: 0% 0%;
+  }
 
-    100% {
-        background-position: 100% 100%;
-    }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 .landing-box-wrapper {
-    display: flex;
-    justify-content: space-between;
-    /* Adjust as needed */
-    align-items: center;
-    /* Adjust as needed */
-    height: auto;
-    border: 1px solid white;
-    border-radius: 10px;
-    padding: 45px;
+  box-sizing: border-box;
+  height: calc(100% - 6em);
+  width: calc(100% - 6em);
+  display: flex;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 0 1.5em 0 1.5em;
 }
 
 #landing-box-h1 {
-    margin-top: 30%;
-    font-weight: 300;
-    font-size: 6em;
-    letter-spacing: -4.5px;
-    color: white;
-    /* text-align: center; */
-}
-
-.landing-box-title {
-    height: auto;
-    width: 100%;
+  font-weight: 300;
+  font-size: 6em;
+  letter-spacing: -4.5px;
+  color: white;
+  margin-bottom: 0;
 }
 
 .decorative-line {
-    background-color: white;
-    height: 1px;
-    width: 100%;
+  background-color: white;
+  height: 1px;
+  width: 100%;
 }
 
-.column1,
-.column2 {
-    flex: 1;
-    /* take up equal space */
-    padding: 0 15px;
-    /* Add some padding */
-    height: 100%;
+.column1 {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  /* take up equal space */
+  /* Add some padding */
+  height: 100%;
+  /* border: 1px solid white;
+    border-radius: 10px; */
 }
+
+.column2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.column2 p {
+  font-family: "IBM Plex Mono", monospace;
+  text-align: right;
+  color: white;
+}
+
+#landing-box-button {
+    position: relative;
+    display: inline-block;
+    padding: 20px 60px;
+    font-size: 24px;
+    margin: 20px 0;
+    border-radius: 50px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    overflow: hidden;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  #landing-box-button .button-text {
+    position:relative;
+    z-index: 3;
+  }
+
+  #landing-box-button::before {
+    /* content: "→"; */
+    font-size: 36px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2; /* Set z-index higher than ::after */
+  }
+  
+  #landing-box-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: white;
+    transition: width 0.3s ease;
+    z-index: 1; /* Set z-index lower than ::before */
+  }
+  
+  #landing-box-button:hover::after {
+    width: 100%;
+  }
+  
+  #landing-box-button:hover {
+    color: black;
+    background-color: white;
+  }
+  
+  button {
+    font-family: 'Poppins', sans-serif;
+  }
