@@ -1,0 +1,35 @@
+.navbar {
+    background: radial-gradient(circle, #4b917d, #f037a5, #cdf564);
+    background-size: 200% 200%;
+    animation: gradient 5s ease infinite alternate;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 3em;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: top 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .navbar.hidden {
+    top: -60px;
+  }
+  
+  .navbar.active {
+    top: 0;
+  }
+  
+  .nav-logo {
+    font-size: 24px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
