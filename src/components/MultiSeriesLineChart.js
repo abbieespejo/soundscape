@@ -1,158 +1,117 @@
-import React, { useEffect, useRef, useState, chartRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import dataset from "../data/dataset.csv";
-import "./MultiSeriesLineChart.css";
 
 const MultiSeriesLineChart = () => {
-  /* Styling for the rendered chart */
+  // Declaring States and Refs
+  const [data, setData] = useState([]);
+  const [averagedData, setAveragedData] = useState([]);
+  const [selectedCharacteristic, setSelectedCharacteristic] = useState("valence");
+  const chartRef = useRef(null);
+  const initialMount = useRef(true);
+
+  // Declaring Constants
   const width = 928;
   const height = 500;
   const marginTop = 20;
   const marginRight = 30;
   const marginBottom = 30;
   const marginLeft = 40;
-  const chartRef = useRef(null);
-  const initialMount = useRef(true);
-  const [data, setData] = useState([]);
-  const audioCharacteristics = [
-    "duration_ms",
-    "popularity",
-    "danceability",
-    "energy",
-    "loudness",
-    "speechiness",
-    "acousticness",
-    "instrumentalness",
-    "liveness",
-    "valence",
-    "tempo",
-  ];
   const genres = ["Dance/Electronic", "latin", "pop", "hip hop", "rock", "R&B"];
-  const years = Array.from(new Set(data.map(d => +d.year)));  // retrieve the years for iteration & data storage
-  const [averagedData, setAveragedData] = useState([]);
-  const [selectedCharacteristic, setSelectedCharacteristic] = useState("duration_ms");
+  const audioCharacteristics = [
+    "duration_ms", "popularity", "danceability", "energy", "loudness", 
+    "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo"
+  ];
+
   useEffect(() => {
-    console.log("Fetching data");
     d3.csv(dataset).then((data) => {
       setData(data);
     });
-  }, []); // This will only run once on component mount to fetch the data
+  }, []);
 
   useEffect(() => {
-    if (data.length === 0) return; // Ensure data is loaded before calculating averages
-    
+    if (data.length === 0) return;
     if (initialMount.current) {
-      initialMount.current = false; // It's initial mount, don't run the effect body yet.
+      initialMount.current = false;
       return;
     }
-    console.log("Processing data...");
-    const averages = {};
-    years.forEach((year) => {
-      averages[year] = {}; // Initialise an empty object for each year
-    });
-    genres.forEach((genre) => {
-      years.forEach((year) => {
-        const filteredData = data.filter(
-          (d) => d.genre.includes(genre) && +d.year === year
-        );
-        const sum = filteredData.reduce(
-          (acc, curr) => acc + +curr[selectedCharacteristic],
-          0
-        );
-        const avg = sum / filteredData.length || 0;
-        averages[year][genre] = avg; // Store the average value for each genre under the corresponding year
-      });
-    });
+    const years = [...new Set(data.map(d => +d.year))].sort((a, b) => a - b);
+    const averages = years.map(year => ({ year, ...genres.reduce((acc, genre) => {
+      const filteredData = data.filter(d => d.genre.includes(genre) && +d.year === year);
+      const sum = filteredData.reduce((acc, curr) => acc + +curr[selectedCharacteristic], 0);
+      const avg = sum / filteredData.length || 0;
+      acc[genre] = avg;
+      return acc;
+    }, {})}));
     setAveragedData(averages);
-    console.log(averages);
+    console.log(averagedData);
   }, [data, selectedCharacteristic]);
 
-  // useEffect(() => {
-  //   const svg = d3.select(chartRef.current)
-  //     .append("svg")
-  //     .attr("width", width)
-  //     .attr("height", height);
-  //   const x = d3
-  //     .scaleLinear()
-  //     .domain(d3.extent(years))
-  //     .range([marginLeft, width - marginRight]);
-
-  //   const allAverages = Object.values(averagedData).flatMap((year) =>
-  //     Object.values(year)
-  //   );
-  //   const minVal = d3.min(allAverages);
-  //   const maxVal = d3.max(allAverages);
-
-  //   const y = d3
-  //     .scaleLinear()
-  //     .domain([minVal, maxVal])
-  //     .range([height - marginBottom, marginTop]);
-
-  //   const line = d3.line()
-  //     .x(d => x(d.year))
-  //     .y(d => y(d.value));
-
-  //   // Render each genre as a line on the chart
-  //   if (Object.keys(averagedData).length > 0) {
-  //     genres.forEach((genre, index) => {
-  //       svg
-  //         .append("path")
-  //         .datum(years)
-  //         .attr("fill", "none")
-  //         .attr("stroke", d3.schemeCategory10[index]) // color based on genre's index
-  //         .attr("stroke-width", 1.5)
-  //         .attr("d", d => line(d.map(year => ({
-  //           year: year,
-  //           value: averagedData[year][genre]
-  //         }))));
-
-  //     });
-  //   }
-  //   // X-Axis
-  //   svg
-  //     .append("g")
-  //     .attr("transform", `translate(0,${height - marginBottom})`)
-  //     .call(
-  //       d3
-  //         .axisBottom(x)
-  //         .ticks(width / 80)
-  //         .tickSizeOuter(0)
-  //     );
-  //   // Y-Axis
-  //   svg
-  //     .append("g")
-  //     .attr("transform", `translate(${marginLeft},0)`)
-  //     .call(d3.axisLeft(y).ticks(height / 40))
-  //     .call((g) => g.select(".domain").remove())
-  //     .call((g) =>
-  //       g
-  //         .selectAll(".tick line")
-  //         .clone()
-  //         .attr("x2", width - marginLeft - marginRight)
-  //         .attr("stroke-opacity", 0.1)
-  //     )
-  //     .call((g) =>
-  //       g
-  //         .append("text")
-  //         .attr("x", -marginLeft)
-  //         .attr("y", 10)
-  //         .attr("fill", "currentColor")
-  //         .attr("text-anchor", "start")
-  //         .text(`↑ Average ${selectedCharacteristic}`)
-  //     );
-
-  // });
+  useEffect(() => {
+    if (averagedData.length === 0) return;
+    d3.select(chartRef.current).selectAll("svg").remove();
+    const svg = d3.select(chartRef.current)
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+      
+    const years = averagedData.map(d => d.year);
+    const x = d3.scaleLinear().domain(d3.extent(years)).range([marginLeft, width - marginRight]);
+    const allAverages = averagedData.flatMap(d => Object.values(d).filter(v => !isNaN(v)));
+      
+    // Log values to debug
+    console.log('All Averages:', allAverages);
+      
+    const minValue = d3.min(allAverages);
+    const maxValue = d3.max(allAverages);
+      
+    // Log values to debug
+    console.log('Min Value:', minValue);
+    console.log('Max Value:', maxValue);
+      
+    // Check if minValue or maxValue is invalid, then return
+    if (minValue === undefined || maxValue === undefined || isNaN(minValue) || isNaN(maxValue)) {
+      console.error('Invalid min or max value');
+      return;
+    }
+    
+    const y = d3.scaleLinear().domain([minValue, maxValue]).range([height - marginBottom, marginTop]);
+    const line = d3.line().x(d => x(d.year)).y(d => y(d.value));
+    const numTicks = Math.max(3, height / 40);
+    
+    genres.forEach((genre, index) => {
+      svg.append("path")
+        .datum(averagedData.map(d => ({ year: d.year, value: d[genre] })))
+        .attr("fill", "none")
+        .attr("stroke", d3.schemeCategory10[index])
+        .attr("stroke-width", 1.5)
+        .attr("d", line);
+    });
+    
+    svg.append("g")
+      .attr("transform", `translate(0,${height - marginBottom})`)
+      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
+    
+    svg.append("g")
+      .attr("transform", `translate(${marginLeft},0)`)
+      .call(d3.axisLeft(y).ticks(numTicks))
+      .call((g) => g.select(".domain").remove())
+      .call((g) => g.selectAll(".tick line").clone().attr("x2", width - marginLeft - marginRight).attr("stroke-opacity", 0.1))
+      .call((g) => g.append("text").attr("x", -marginLeft).attr("y", 10).attr("fill", "currentColor").attr("text-anchor", "start").text(`↑ Average ${selectedCharacteristic}`));
+    
+  }, [averagedData, selectedCharacteristic]);
+  
 
   return (
-    <div id="line-chart-container" ref={chartRef}>
-      {/* <h1>Audio Characteristics Average Over the Years</h1>
+    <div ref={chartRef}>
+      <h1>Audio Characteristics Average Over the Years</h1>
       <select onChange={(e) => setSelectedCharacteristic(e.target.value)}>
         {audioCharacteristics.map((characteristic) => (
           <option key={characteristic} value={characteristic}>
             {characteristic}
           </option>
         ))}
-      </select> */}
+      </select>
     </div>
   );
 };
