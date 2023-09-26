@@ -90,7 +90,14 @@ const MultiSeriesLineChart = () => {
         // Format Y Axis Labels to Reflect Actual Values
         svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
-        .call(d3.axisLeft(y).ticks(numTicks).tickFormat(d3.format(".3")))
+        .call(d3.axisLeft(y).ticks(numTicks).tickFormat(d => {
+            // If the selected characteristic is 'duration_ms', format the tick values differently
+            if (selectedCharacteristic === "duration_ms") {
+                return (d / 1000).toFixed(1) + 's'; // Format as seconds with one decimal place
+            } else {
+                return d3.format(".2")(d); // Use existing formatting for other characteristics
+            }
+        }))
         .call(g => g.select(".domain").remove())
         .call(g => g.selectAll(".tick line").clone().attr("x2", width - marginLeft - marginRight).attr("stroke-opacity", 0.1))
         .call(g => g.append("text").attr("x", -marginLeft).attr("y", 10).attr("fill", "currentColor").attr("text-anchor", "start").text(`↑ Average ${selectedCharacteristic}`));
