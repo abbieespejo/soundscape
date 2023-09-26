@@ -35,30 +35,28 @@ const MultiSeriesLineChart = () => {
             initialMount.current = false;
             return;
         }
-
+    
         const years = [...new Set(data.map(d => +d.year))].sort((a, b) => a - b);
-
-        // Calculate min and max values for normalization
-        const allCharacteristicValues = data.map(d => +d[selectedCharacteristic]).filter(v => !isNaN(v));
-        const localMinValue = d3.min(allCharacteristicValues);
-        const localMaxValue = d3.max(allCharacteristicValues);
-
-        setMinValue(localMinValue);
-        setMaxValue(localMaxValue);
-
+    
         const averages = years.map(year => ({
             year, ...genres.reduce((acc, genre) => {
                 const filteredData = data.filter(d => d.genre.includes(genre) && +d.year === year);
                 const sum = filteredData.reduce((acc, curr) => acc + +curr[selectedCharacteristic], 0);
                 const avg = sum / filteredData.length || 0;
-                const normalizedAvg = (avg - localMinValue) / (localMaxValue - localMinValue);
-                acc[genre] = normalizedAvg;
+                acc[genre] = avg; // Store original average values, no normalization needed
                 return acc;
             }, {})
         }));
-
+    
         setAveragedData(averages);
+    
+        // Dynamically calculate the min and max values based on the selected characteristic
+        const allAverages = averages.flatMap(d => Object.values(d).filter(v => !isNaN(v) && v !== d.year));
+        setMinValue(d3.min(allAverages));
+        setMaxValue(d3.max(allAverages));
+    
     }, [data, selectedCharacteristic]);
+    
 
     useEffect(() => {
         if (averagedData.length === 0 || minValue === null || maxValue === null) return;
@@ -71,9 +69,9 @@ const MultiSeriesLineChart = () => {
         const years = averagedData.map(d => d.year);
         const x = d3.scaleLinear().domain(d3.extent(years)).range([marginLeft, width - marginRight]);
 
-        // Set Y Scale Domain to [0, 1] for Normalized Values
-        const y = d3.scaleLinear().domain([0, 1]).range([height - marginBottom, marginTop]);
-        const line = d3.line().x(d => x(d.year)).y(d => y(d.value));
+        // Set Y Scale Domain to [minValue, maxValue] 
+        const y = d3.scaleLinear().domain([minValue, maxValue]).range([height - marginBottom, marginTop]);
+        const line = d3.line().x(d => x(d.year)).y(d => y(d.value)); // No need for denormalization
         const numTicks = Math.max(3, height / 40);
 
         genres.forEach((genre, index) => {
@@ -91,11 +89,12 @@ const MultiSeriesLineChart = () => {
 
         // Format Y Axis Labels to Reflect Actual Values
         svg.append("g")
-            .attr("transform", `translate(${marginLeft},0)`)
-            .call(d3.axisLeft(y).ticks(numTicks).tickFormat(d => d * (maxValue - minValue) + minValue))
-            .call(g => g.select(".domain").remove())
-            .call(g => g.selectAll(".tick line").clone().attr("x2", width - marginLeft - marginRight).attr("stroke-opacity", 0.1))
-            .call(g => g.append("text").attr("x", -marginLeft).attr("y", 10).attr("fill", "currentColor").attr("text-anchor", "start").text(`↑ Average ${selectedCharacteristic}`));
+        .attr("transform", `translate(${marginLeft},0)`)
+        .call(d3.axisLeft(y).ticks(numTicks).tickFormat(d3.format(".3")))
+        .call(g => g.select(".domain").remove())
+        .call(g => g.selectAll(".tick line").clone().attr("x2", width - marginLeft - marginRight).attr("stroke-opacity", 0.1))
+        .call(g => g.append("text").attr("x", -marginLeft).attr("y", 10).attr("fill", "currentColor").attr("text-anchor", "start").text(`↑ Average ${selectedCharacteristic}`));
+
 
     }, [averagedData, selectedCharacteristic, minValue, maxValue]);
 
