@@ -71,16 +71,26 @@ const MultiSeriesLineChart = () => {
 
         // Set Y Scale Domain to [minValue, maxValue] 
         const y = d3.scaleLinear().domain([minValue, maxValue]).range([height - marginBottom, marginTop]);
-        const line = d3.line().x(d => x(d.year)).y(d => y(d.value)); // No need for denormalization
+        const line = d3.line().x(d => x(d.year)).y(d => y(d.value)); 
         const numTicks = Math.max(3, height / 40);
 
         genres.forEach((genre, index) => {
-            svg.append("path")
-                .datum(averagedData.map(d => ({ year: d.year, value: d[genre] })))
+            const lineData = averagedData.map(d => ({ year: d.year, value: d[genre] }));
+            const path = svg.append("path")
+                .datum(lineData)
                 .attr("fill", "none")
                 .attr("stroke", d3.schemeCategory10[index])
                 .attr("stroke-width", 1.5)
                 .attr("d", line);
+    
+            const totalLength = path.node().getTotalLength();
+            path
+                .attr("stroke-dasharray", totalLength + " " + totalLength)
+                .attr("stroke-dashoffset", totalLength)
+                .transition()
+                .duration(2000)
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0);
         });
 
         svg.append("g")
