@@ -39,16 +39,6 @@ const MultiSeriesLineChart = () => {
 
         const years = [...new Set(data.map(d => +d.year))].sort((a, b) => a - b);
 
-        // const averages = years.map(year => ({
-        //     year, ...genres.reduce((acc, genre) => {
-        //         const filteredData = data.filter(d => d.genre.includes(genre) && +d.year === year);
-        //         const sum = filteredData.reduce((acc, curr) => acc + +curr[selectedCharacteristic], 0);
-        //         const avg = sum / filteredData.length || 0;
-        //         acc[genre] = avg; // Store original average values, no normalization needed
-        //         return acc;
-        //     }, {})
-        // }));
-
         const averages = years.map(year => {
             const yearData = data.filter(d => +d.year === year);
             const overallSum = yearData.reduce((acc, curr) => acc + +curr[selectedCharacteristic], 0);
