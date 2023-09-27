@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import dataset from "../data/dataset.csv";
 
 const MultiSeriesLineChart = () => {
+    const tooltipRef = useRef(null);
     const [data, setData] = useState([]);
     const [averagedData, setAveragedData] = useState([]);
     const [selectedCharacteristic, setSelectedCharacteristic] = useState("valence");
@@ -78,11 +79,12 @@ const MultiSeriesLineChart = () => {
             const lineData = averagedData.map(d => ({ year: d.year, value: d[genre] }));
             const path = svg.append("path")
                 .datum(lineData)
+                .attr("class", "line") // Assign a class to the line
                 .attr("fill", "none")
                 .attr("stroke", d3.schemeCategory10[index])
                 .attr("stroke-width", 1.5)
                 .attr("d", line);
-    
+        
             const totalLength = path.node().getTotalLength();
             path
                 .attr("stroke-dasharray", totalLength + " " + totalLength)
@@ -91,7 +93,50 @@ const MultiSeriesLineChart = () => {
                 .duration(2000)
                 .ease(d3.easeLinear)
                 .attr("stroke-dashoffset", 0);
+        
+                path
+                .on('mouseover', function (event) { // Capture the event object as the first parameter
+                    d3.select(tooltipRef.current).style('visibility', 'visible'); // show tooltip
+                    // Reduce the opacity of all paths except the one being hovered over
+                    
+                    // Smoothly reduce the opacity of all lines
+                    svg.selectAll('.line')
+                    .transition() // Start a transition
+                    .duration(100) // Set its duration to 300 milliseconds
+                    .attr('opacity', 0.1); // Reduce opacity of all lines using class
+                    
+                     // Smoothly highlight the hovered line
+                    d3.select(this)
+                    .transition() // Start a transition
+                    .duration(200) // Set its duration to 300 milliseconds
+                    .attr('opacity', 1); // Increase the opacity of the hovered line
+                })
+                .on('mousemove', (event) => {
+                    const pointer = d3.pointer(event);
+                    const mouseX = pointer[0];
+                    const year = Math.round(x.invert(mouseX));
+                    const avgValue = lineData.find(d => d.year === year)?.value || 0;
+                    d3.select(tooltipRef.current)
+                        .style('top', (event.pageY - 10) + 'px')
+                        .style('left', (event.pageX + 10) + 'px')
+                        .html(`
+                            <p>Genre: ${genre}</p>
+                            <p>Year: ${year}</p>
+                            <p>Average: ${avgValue.toFixed(2)}</p>
+                        `);
+                })
+                .on('mouseout', () => {
+                    // Hide Tooltip
+                    d3.select(tooltipRef.current).style('visibility', 'hidden');
+                    
+                    // Smoothly reset the opacity of all lines back to 1
+                    svg.selectAll('.line')
+                    .transition() // Start a transition
+                    .duration(200) // Set its duration to 300 milliseconds
+                    .attr('opacity', 1); // Reset opacity of all lines using class
+                });
         });
+        
 
         svg.append("g")
             .attr("transform", `translate(0,${height - marginBottom})`)
@@ -101,9 +146,11 @@ const MultiSeriesLineChart = () => {
         svg.append("g")
         .attr("transform", `translate(${marginLeft},0)`)
         .call(d3.axisLeft(y).ticks(numTicks).tickFormat(d => {
-            // If the selected characteristic is 'duration_ms', format the tick values differently
+            // If the selected characteristic is 'duration_ms' or 'tempo', format the tick values differently
             if (selectedCharacteristic === "duration_ms") {
                 return (d / 1000).toFixed(1) + 's'; // Format as seconds with one decimal place
+            } else if(selectedCharacteristic === "tempo") {
+                return (d3.format(".3")(d) + 's'); // Format as seconds with one decimal place
             } else {
                 return d3.format(".2")(d); // Use existing formatting for other characteristics
             }
@@ -125,6 +172,7 @@ const MultiSeriesLineChart = () => {
                     </option>
                 ))}
             </select>
+            <div ref={tooltipRef} style={{position: 'absolute', visibility: 'hidden', background: '#fff', padding: '5px', border: '1px solid #ccc', borderRadius: '5px'}}></div>
         </div>
     );
 };
