@@ -85,7 +85,8 @@
     align-self: flex-start;
     display: flex;
     padding: 20px 60px;
-    font-size: 24px;
+    font-size: 1.5em;
+    font-weight: bold;
     border-radius: 50px;
     cursor: pointer;
     color: white;
@@ -127,7 +128,7 @@
   }
   
   #landing-box-button:hover {
-    color: black;
+    color: #785ae6;
     background-color: white;
   }
 
