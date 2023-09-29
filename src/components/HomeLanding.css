@@ -32,7 +32,6 @@
 #landing-box-h1 {
   font-weight: 300;
   font-size: 6em;
-  letter-spacing: -4.5px;
   color: white;
   margin-bottom: 0;
 }
@@ -47,11 +46,7 @@
   flex: 1;
   display: flex;
   align-items: flex-end;
-  /* take up equal space */
-  /* Add some padding */
   height: 100%;
-  /* border: 1px solid white;
-    border-radius: 10px; */
 }
 
 .column2 {
@@ -64,7 +59,6 @@
 }
 
 .column2 p {
-  font-family: "IBM Plex Mono", monospace;
   text-align: right;
   color: white;
 }
@@ -118,8 +112,4 @@
   #landing-box-button:hover {
     color: black;
     background-color: white;
-  }
-  
-  button {
-    font-family: 'Poppins', sans-serif;
   }
