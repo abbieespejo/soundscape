@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import "./HomeLanding.css";
+import Lottie from "lottie-react";
+import analysingInfographics from "../assets/analysing-inforgraphics.json"; // Adjust the path to your JSON file
 
 const HomeLanding = () => {
   return (
     <div className="gradient-box">
       <div className="landing-box-wrapper">
         <div className="column1">
-          <h1 id="landing-box-h1">Soundscape.</h1>
+          <div id="column-1-contents">
+            <h1 id="landing-box-h1">
+              <span style={{ color: "#785ae6" }}>Discover</span> the trends that
+              shape how we listen to{" "}
+              <span style={{ color: "#785ae6" }}>music today</span>
+            </h1>
+            <p>
+              Soundscape offers engaging, user-friendly visualisations that
+              represent a rich dataset of the top Spotify tracks spanning the
+              years 1999 to 2019.
+            </p>
+            <button id="landing-box-button">
+              <span className="button-text">Get started</span>
+            </button>
+          </div>
         </div>
         <div className="column2">
-          <p>
-          Interactively explore key audio statistics from Spotify's top 2,000 tracks from 1999 to 2019. Dive into the data and discover the trends that shape how we listen to music today.
-          </p>
-          <div className="decorative-line"></div>
-          <button id="landing-box-button"><span className="button-text">Get started</span></button>
+          <Lottie animationData={analysingInfographics}></Lottie>
         </div>
       </div>
     </div>

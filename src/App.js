@@ -10,7 +10,7 @@ import MultiSeriesLineChart from "./components/MultiSeriesLineChart";
 const App = () => {
   return (
     <div>
-      {/* <NavBar /> */}
+      <NavBar />
       <div id="app-container">
         <HomeLanding />
         {/* <CorrelationHeatmap /> */}
