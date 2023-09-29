@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./HomeLanding.css";
-import top100Icon from '../assets/top-100-icon.png';
+import Lottie from "lottie-react";
+import analysingInfographics from "../assets/analysing-inforgraphics.json"; // Adjust the path to your JSON file
 
 const HomeLanding = () => {
   return (
@@ -18,13 +19,13 @@ const HomeLanding = () => {
               represent a rich dataset of the top Spotify tracks spanning the
               years 1999 to 2019.
             </p>
+            <button id="landing-box-button">
+              <span className="button-text">Get started</span>
+            </button>
           </div>
         </div>
         <div className="column2">
-          {/* <button id="landing-box-button">
-            <span className="button-text">Get started</span>
-          </button> */}
-            <img src={top100Icon} alt="Example" />
+          <Lottie animationData={analysingInfographics}></Lottie>
         </div>
       </div>
     </div>

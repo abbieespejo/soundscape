@@ -24,7 +24,7 @@
   height: calc(100% - 6em);
   width: calc(100% - 6em);
   display: flex;
-  border: 1px solid #785ae6;
+  /* border: 1px solid #785ae6; */
   border-radius: 10px;
   padding: 0 5em 0 5em;
 }
@@ -33,10 +33,8 @@
   font-family: 'GeneralSans-Medium';
   font-size: 3.5em;
   color: black;
-  margin-bottom: 0;
   line-height: 1em;
-  padding-bottom: .25em;
-  
+  margin-bottom: 0;
 }
 
 .decorative-line {
@@ -64,6 +62,8 @@
   color: #63727e;
   font-size: 1.2em;
   line-height: 1.5em;
+  margin: 2em 0 1.5em 0;
+  
 }
 
 .column2 {
@@ -74,7 +74,6 @@
   justify-content: flex-end;
   height: 100%;
   font-family: 'Karla';
-  border: 1px solid #09ef11;
 }
 
 .column2 p {
@@ -83,10 +82,10 @@
 
 #landing-box-button {
     position: relative;
-    display: inline-block;
+    align-self: flex-start;
+    display: flex;
     padding: 20px 60px;
     font-size: 24px;
-    margin: 20px 0;
     border-radius: 50px;
     cursor: pointer;
     color: white;
@@ -104,7 +103,7 @@
   #landing-box-button::before {
     /* content: "→"; */
     font-size: 36px;
-    position: absolute;
+    position: abslolute;
     right: 5px;
     top: 50%;
     transform: translateY(-50%);
