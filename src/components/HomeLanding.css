@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  background: radial-gradient(circle, #4b917d, #f037a5, #cdf564);
+  background: white;
   background-size: 200% 200%;
   animation: gradient 5s ease infinite alternate;
 }
@@ -24,16 +24,19 @@
   height: calc(100% - 6em);
   width: calc(100% - 6em);
   display: flex;
-  border: 1px solid white;
+  border: 1px solid #785ae6;
   border-radius: 10px;
-  padding: 0 1.5em 0 1.5em;
+  padding: 0 5em 0 5em;
 }
 
 #landing-box-h1 {
-  font-family: 'GeneralSans-Regular';
-  font-size: 5em;
-  color: white;
+  font-family: 'GeneralSans-Medium';
+  font-size: 3.5em;
+  color: black;
   margin-bottom: 0;
+  line-height: 1em;
+  padding-bottom: .25em;
+  
 }
 
 .decorative-line {
@@ -43,10 +46,24 @@
 }
 
 .column1 {
-  flex: 1;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  flex: 1;
   height: 100%;
+}
+
+#column-1-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* For horizontal centering */
+  justify-content: center; /* For vertical centering */
+  height: 100%; /* Make sure it takes the full height of the parent */
+}
+
+#column-1-contents p {
+  color: #63727e;
+  font-size: 1.2em;
+  line-height: 1.5em;
 }
 
 .column2 {
@@ -57,11 +74,11 @@
   justify-content: flex-end;
   height: 100%;
   font-family: 'Karla';
+  border: 1px solid #09ef11;
 }
 
 .column2 p {
-  text-align: right;
-  color: white;
+  text-align: right; 
 }
 
 #landing-box-button {
@@ -73,8 +90,8 @@
     border-radius: 50px;
     cursor: pointer;
     color: white;
-    background-color: transparent;
-    border: 1px solid white;
+    background-color: #785ae6;
+    border: 1px solid #785ae6;
     overflow: hidden;
     transition: color 0.3s ease, background-color 0.3s ease;
   }
@@ -114,3 +131,4 @@
     color: black;
     background-color: white;
   }
+
