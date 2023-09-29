@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <nav className={`navbar ${visible ? 'active' : 'hidden'}`}>
-      <div className="nav-logo">Your Logo</div>
+      <div className="nav-logo">Soundscape</div>
       <ul className="nav-links">
         <li>Home</li>
         <li>About</li>

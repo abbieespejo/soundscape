@@ -1,5 +1,9 @@
 @import url('../src/assets/css/general-sans.css');
 
+:root {
+  --main-colour: #785ae6; 
+}
+
 body {
   margin: 0;
   font-family: 'Karla';
