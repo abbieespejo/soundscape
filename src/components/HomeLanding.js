@@ -20,7 +20,7 @@ const HomeLanding = () => {
               years 1999 to 2019.
             </p>
             <button id="landing-box-button">
-              <span className="button-text">Learn more</span>
+              <span className="button-text">Get started</span>
             </button>
           </div>
         </div>
