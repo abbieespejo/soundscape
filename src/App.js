@@ -6,6 +6,7 @@ import CorrelationHeatmap from "./components/CorrelationHeatmap";
 import HomeLanding from "./components/HomeLanding";
 import NavBar from "./components/NavBar";
 import MultiSeriesLineChart from "./components/MultiSeriesLineChart";
+import AudioCharacteristics from "./components/AudioCharacteristics";
 
 const App = () => {
   return (
@@ -13,8 +14,9 @@ const App = () => {
       <NavBar />
       <div id="app-container">
         <HomeLanding />
+        <AudioCharacteristics />
         {/* <CorrelationHeatmap /> */}
-        <MultiSeriesLineChart />
+        {/* <MultiSeriesLineChart /> */}
       </div>
     </div>
   );
