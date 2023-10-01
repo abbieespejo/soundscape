@@ -1,7 +1,7 @@
 // Card.js
 import React, { useState } from 'react';
 import infoIcon from '../assets/information.png';
-import './InfoCard.css';
+import './AudioCharacteristics.css';
 
 function Card({ label, icon, description }) {
   const [isVisible, setIsVisible] = useState(false);
