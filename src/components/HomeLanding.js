@@ -25,7 +25,7 @@ const HomeLanding = () => {
           </div>
         </div>
         <div className="column2">
-          <Lottie animationData={analysingInfographics}></Lottie>
+          {/* <Lottie animationData={analysingInfographics}></Lottie> */}
         </div>
       </div>
     </div>

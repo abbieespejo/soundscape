@@ -5,6 +5,10 @@ import './RacingBarChart.css';
 
 
 const RacingBarChart = () => {
+
+    console.log("RacingBarChart rendered");
+
+   
     const randomColor = () => {
         return `rgb(${255 * Math.random()}, ${255 * Math.random()}, ${255})`
     }
@@ -28,7 +32,7 @@ const RacingBarChart = () => {
         };
     }, {});
 
-    const time = Array(22).fill(0).map((itm, idx) => idx + 1);
+    const time = Array(21).fill(0).map((itm, idx) => idx + 1);
 
     return (
         <div className="racing-bar-chart-wrapper">

@@ -43,13 +43,14 @@ const BarChart = ({
             const id = setInterval(update, timeout + delay);
             setIntervalId(id);
         }
-
+    
         return () => {
             if(intervalId) {
                 clearInterval(intervalId);
             }
         };
-    }, [start, idx]); 
+    }, [start, idx]);
+    
 
     const sortAxis = (i, descending = true) => {
         let toSort = Object.keys(data).map(name => {
@@ -79,6 +80,7 @@ const BarChart = ({
     };
 
     const update = () => {
+        
         if(idx + 1 === timeline.length) {
             clearInterval(intervalId);
             return;
@@ -89,6 +91,7 @@ const BarChart = ({
         setPrevRank(currRank);
         setCurrRank(newRank);
         setMaxVal(newMaxVal);
+        console.log("This is the current idx value: ", idx);
     };
 
     const getInfoFromRank = name => {
