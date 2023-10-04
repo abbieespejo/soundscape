@@ -43,8 +43,8 @@ const RacingBarChart = () => {
                     timeline={time}
                     labels={labels}
                     colors={colors}
-                    timeout={700}
-                    delay={0}
+                    timeout={1000}
+                    delay={200}
                     timelineStyle={{
                         textAlign: "center",
                         fontSize: "50px",
@@ -57,12 +57,12 @@ const RacingBarChart = () => {
                         fontSize: "30px",
                     }}
                     barStyle={{
-                        height: "60px",
+                        height: "15px",
                         marginTop: "10px",
                         borderRadius: "10px",
                     }}
                     width={[15, 75, 10]}
-                    maxItems={5}
+                    maxItems={15}
                 />
             </div>
         </div>
