@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
-import data from "../data/output_file_2.json";
+import data from "../data/output_file.json";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -62,8 +62,8 @@ const ZoomableTreemap = ({ width = 2000, height = 570 }) => {
                 .on("click", (event, d) => d === root ? zoomout(root) : zoomin(d));
 
             node.append("title")
-            .text(d => `${name(d)}${d.depth === 0 ? '' : `\n${format(d.value)}`}`);
-            
+                .text(d => `${name(d)}\n${format(d.value)}`);
+
             node.append("rect")
                 .attr("id", d => d.leafUid = `leaf_${uuidv4()}`)
                 .attr("fill", d => d === root ? "#fff" : d.children ? "#ccc" : "#ddd")
