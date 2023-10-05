@@ -1,5 +1,5 @@
 import React from 'react'
-import data from '../../data/processed_data.json';
+import data from '../../data/processed_data_v2.json';
 import BarChart from './BarChart';
 import './RacingBarChart.css';
 
@@ -30,9 +30,11 @@ const RacingBarChart = () => {
                 )
             }
         };
+        
     }, {});
 
-    const time = Array(21).fill(0).map((itm, idx) => idx + 1);
+    const time = Array(22).fill(0).map((item, idx) => idx);
+
 
     return (
         <div className="racing-bar-chart-wrapper">
@@ -43,8 +45,8 @@ const RacingBarChart = () => {
                     timeline={time}
                     labels={labels}
                     colors={colors}
-                    timeout={1000}
-                    delay={200}
+                    timeout={500}
+                    delay={1000}
                     timelineStyle={{
                         textAlign: "center",
                         fontSize: "50px",
@@ -58,7 +60,7 @@ const RacingBarChart = () => {
                     }}
                     barStyle={{
                         height: "15px",
-                        marginTop: "10px",
+                        marginTop: "25px",
                         borderRadius: "10px",
                     }}
                     width={[15, 75, 10]}

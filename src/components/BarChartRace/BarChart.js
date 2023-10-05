@@ -33,7 +33,7 @@ const BarChart = ({
     };
 
     const [intervalId, setIntervalId] = useState(null);
-    const [idx, setIdx] = useState(0);
+    const [idx, setIdx] = useState(-1);
     const [prevRank, setPrevRank] = useState({});
     const [currRank, setCurrRank] = useState({});
     const [maxVal, setMaxVal] = useState(0);
