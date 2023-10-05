@@ -4,6 +4,7 @@ import { Transition } from 'react-transition-group';
 const classes = {
     bar: {
         position: "relative",
+        // margin: "100px 0"
     },
     container: {
         width: "100%",
