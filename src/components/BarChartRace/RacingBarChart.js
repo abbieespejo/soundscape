@@ -6,7 +6,8 @@ import './RacingBarChart.css';
 
 const RacingBarChart = () => {
 
-    console.log("RacingBarChart rendered");
+    const startYear = 1999;
+    const endYear = 2019;
 
    
     const randomColor = () => {
@@ -33,7 +34,7 @@ const RacingBarChart = () => {
         
     }, {});
 
-    const time = Array(22).fill(0).map((item, idx) => idx);
+    const time = Array.from({ length: endYear - startYear + 1 }, (_, idx) => startYear + idx);
 
 
     return (
