@@ -8,8 +8,6 @@ const RacingBarChart = () => {
 
     const startYear = 1999;
     const endYear = 2019;
-
-   
     const randomColor = () => {
         return `rgb(${255 * Math.random()}, ${255 * Math.random()}, ${255})`
     }
@@ -41,6 +39,8 @@ const RacingBarChart = () => {
         <div className="racing-bar-chart-wrapper">
             <div className="container">
                 <BarChart
+                    startYear={startYear}
+                    endYear={endYear}
                     start={true}
                     data={data}
                     timeline={time}

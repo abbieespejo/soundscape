@@ -2,3 +2,23 @@
     width: 90vw;
     height: 100%;
 }
+
+/* Style the slider track */
+.track {
+    position: relative;
+    width: 100%;
+    height: 5px;
+    background: #e0e0e0;
+    margin-bottom: 20px; /* spacing for the ticks */
+}
+
+/* Create the tick marks using pseudo-elements */
+.track::before {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 1px;
+    background: #000;
+    bottom: -5px; /* adjust as needed to position ticks */
+    left: 0; /* position of the first tick, this will be overridden in inline styles */
+}

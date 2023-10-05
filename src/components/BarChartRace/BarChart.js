@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import Bar from './Bar';
+import './RacingBarChart.css';
 
 const classes = {
-  barChart: {
-    width: "100%",
-    position: "relative",
-  },
-  container: {
-    width: "100%",
-  }
+    barChart: {
+        width: "100%",
+        position: "relative",
+    },
+    container: {
+        width: "100%",
+    }
 };
 
-const BarChart = ({ 
-    data, 
-    barStyle, 
-    maxItems: propsMaxItems, 
-    start, 
-    timeline, 
-    timeout, 
-    delay, 
-    colors, 
-    labels, 
-    timelineStyle, 
-    textBoxStyle, 
-    width 
+const BarChart = ({
+    data,
+    startYear,
+    endYear,
+    barStyle,
+    maxItems: propsMaxItems,
+    start,
+    timeline,
+    timeout,
+    delay,
+    colors,
+    labels,
+    timelineStyle,
+    textBoxStyle,
+    width
 }) => {
     const barHeight = `calc(${barStyle.height} + ${barStyle.marginTop})`;
     const nItems = Object.keys(data).length;
@@ -33,24 +36,18 @@ const BarChart = ({
     };
 
     const [intervalId, setIntervalId] = useState(null);
-    const [idx, setIdx] = useState(-1);
+    const [idx, setIdx] = useState(0);
     const [prevRank, setPrevRank] = useState({});
     const [currRank, setCurrRank] = useState({});
     const [maxVal, setMaxVal] = useState(0);
 
+    
     useEffect(() => {
-        if(start){
-            const id = setInterval(update, timeout + delay);
-            setIntervalId(id);
-        }
-    
-        return () => {
-            if(intervalId) {
-                clearInterval(intervalId);
-            }
-        };
-    }, [start, idx]);
-    
+        const [newRank, newMaxVal] = sortAxis(idx);
+        setPrevRank(currRank);
+        setCurrRank(newRank);
+        setMaxVal(newMaxVal);
+    }, [idx]);
 
     const sortAxis = (i, descending = true) => {
         let toSort = Object.keys(data).map(name => {
@@ -72,7 +69,7 @@ const BarChart = ({
 
         const maxValue = Math.max(...toSort.map(item => item.val));
         const sortedRank = toSort.reduce((ret, item, index) => ({
-            ...ret, 
+            ...ret,
             [item.name]: index
         }), {});
 
@@ -80,8 +77,8 @@ const BarChart = ({
     };
 
     const update = () => {
-        
-        if(idx + 1 === timeline.length) {
+
+        if (idx + 1 === timeline.length) {
             clearInterval(intervalId);
             return;
         }
@@ -123,7 +120,7 @@ const BarChart = ({
                 {
                     Object.keys(data).map(name => {
                         const [value, hidden, currStyle, prevStyle] = getInfoFromRank(name);
-                        if(hidden) return null;
+                        if (hidden) return null;
                         return (
                             <Bar
                                 key={name}
@@ -140,6 +137,28 @@ const BarChart = ({
                     })
                 }
             </div>
+            <div style={{ position: 'relative', width: '100%' }}>
+    <input 
+        type="range" 
+        min="0" 
+        max={timeline.length - 1} 
+        value={idx} 
+        onChange={(e) => setIdx(Number(e.target.value))} 
+        style={{ width: '100%' }} 
+        list="year-ticks"
+    />
+
+    <div style={{ display: 'flex', justifyContent: 'space-between', position: 'absolute', width: '100%', marginTop: '20px' }}>
+        {timeline.map(year => (
+            <span key={year} style={{ fontSize: '10px' }}>{year}</span>
+        ))}
+    </div>
+</div>
+
+
+
+
+
         </div>
     );
 }
