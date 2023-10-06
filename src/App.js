@@ -17,7 +17,7 @@ const App = () => {
         <AudioCharacteristics />
         <ZoomableTreemap />
         {/* <CorrelationHeatmap /> */}
-        {/* <MultiSeriesLineChart /> */}
+        <MultiSeriesLineChart />
         
 
       </div>
