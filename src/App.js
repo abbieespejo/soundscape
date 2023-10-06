@@ -13,10 +13,11 @@ const App = () => {
       <NavBar />
       <div id="app-container">
         <HomeLanding />
-        {/* <AudioCharacteristics /> */}
+        <RacingBarChart/>
+        <AudioCharacteristics />
         {/* <CorrelationHeatmap /> */}
         {/* <MultiSeriesLineChart /> */}
-        <RacingBarChart/>
+        
 
       </div>
     </div>
