@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import "./ZoomableTreeMap.css";
 
 
-const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
+const ZoomableTreemap = ({ width = 2000, height = 850, padding = 20 }) => {
     const ref = useRef();
     const tooltipRef = useRef();
 
@@ -30,9 +30,16 @@ const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
         console.log("Treemap Root:", root);
         console.log("Hierarchy:", hierarchy);
 
+        const viewBox = [
+            -padding / 2, // left padding
+            -30.5 - padding / 2, // top padding (including your existing -30.5 offset)
+            width + padding, // width + right padding
+            height + 30 + padding // height + bottom padding (including your existing 30 offset)
+        ];
+
         // Create the scales.
-        const x = d3.scaleLinear().rangeRound([0, width]);
-        const y = d3.scaleLinear().rangeRound([0, height]);
+        const x = d3.scaleLinear().rangeRound([padding, width - padding]);
+        const y = d3.scaleLinear().rangeRound([padding, height - padding]);
 
         const format = d3.format(",d");
         const name = d => {
@@ -45,6 +52,7 @@ const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
             .style("opacity", 0); // Start with the tooltip hidden
 
         function mouseover(event, d) {
+            console.log("Mouseover event triggered for", d);
             tooltip.transition().duration(200).style("opacity", 1); // Show the tooltip
             tooltip.html(`Name: ${name(d)}<br>Value: ${format(d.value)}`)
                 .style("left", `${event.pageX + 5}px`)
@@ -52,11 +60,12 @@ const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
         }
 
         function mouseout() {
+            console.log("Mouseout event triggered");
             tooltip.transition().duration(500).style("opacity", 0); // Hide the tooltip
         }
 
         const svg = d3.select(ref.current)
-            .attr("viewBox", [0.5, -30.5, width, height + 30])
+        .attr("viewBox", viewBox.join(" "))
             .attr("width", width)
             .attr("height", height + 30)
             .attr("style", "max-width: 100%; height: auto;")
@@ -108,9 +117,9 @@ const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
 
         function position(group, root) {
             group.selectAll("g")
-                .attr("transform", d => d === root ? `translate(0,-30)` : `translate(${x(d.x0)},${y(d.y0)})`)
+                .attr("transform", d => d === root ? `translate(${padding / 2},${padding / 2 - 30})` : `translate(${x(d.x0)},${y(d.y0)})`)
                 .select("rect")
-                .attr("width", d => d === root ? width : x(d.x1) - x(d.x0))
+                .attr("width", d => d === root ? width - padding : x(d.x1) - x(d.x0))
                 .attr("height", d => d === root ? 30 : y(d.y1) - y(d.y0));
         }
 
@@ -147,10 +156,15 @@ const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
                 .call(t => group1.transition(t)
                     .call(position, d.parent));
         }
+        tooltip.style("opacity", 1).html("Test tooltip").style("left", "10px").style("top", "10px");
     }, []);
-
-    return <svg ref={ref} width={width} height={height + 30}>
-        
-    </svg>;
+    
+    return (
+        <>
+            <svg ref={ref} width={width} height={height + 30} />
+            {/* Add this div for the tooltip */}
+            <div ref={tooltipRef} className="tooltip" />
+        </>
+    );
 };
 export default ZoomableTreemap;
