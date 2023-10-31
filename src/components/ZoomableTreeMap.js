@@ -2,10 +2,12 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import data from "../data/output_file.json";
 import { v4 as uuidv4 } from 'uuid';
+import "./ZoomableTreeMap.css";
 
 
-const ZoomableTreemap = ({ width = 2000, height = 570 }) => {
+const ZoomableTreemap = ({ width = 2000, height = 850 }) => {
     const ref = useRef();
+    const tooltipRef = useRef();
 
     useEffect(() => {
         if (!data) return;
@@ -39,7 +41,19 @@ const ZoomableTreemap = ({ width = 2000, height = 570 }) => {
             }
             return d.ancestors().reverse().map(d => d.data.name).join("/");
         };
-        
+        const tooltip = d3.select(tooltipRef.current)
+            .style("opacity", 0); // Start with the tooltip hidden
+
+        function mouseover(event, d) {
+            tooltip.transition().duration(200).style("opacity", 1); // Show the tooltip
+            tooltip.html(`Name: ${name(d)}<br>Value: ${format(d.value)}`)
+                .style("left", `${event.pageX + 5}px`)
+                .style("top", `${event.pageY + 5}px`);
+        }
+
+        function mouseout() {
+            tooltip.transition().duration(500).style("opacity", 0); // Hide the tooltip
+        }
 
         const svg = d3.select(ref.current)
             .attr("viewBox", [0.5, -30.5, width, height + 30])
@@ -64,10 +78,12 @@ const ZoomableTreemap = ({ width = 2000, height = 570 }) => {
             node.append("title")
                 .text(d => `${name(d)}\n${format(d.value)}`);
 
-            node.append("rect")
+                node.append("rect")
                 .attr("id", d => d.leafUid = `leaf_${uuidv4()}`)
                 .attr("fill", d => d === root ? "#fff" : d.children ? "#ccc" : "#ddd")
-                .attr("stroke", "#fff");
+                .attr("stroke", "#fff")
+                .on("mouseover", mouseover)  // Add the mouseover event listener
+                .on("mouseout", mouseout);   // Add the mouseout event listener
 
             node.append("clipPath")
                 .attr("id", d => d.clipUid = `clip_${uuidv4()}`)
@@ -133,6 +149,8 @@ const ZoomableTreemap = ({ width = 2000, height = 570 }) => {
         }
     }, []);
 
-    return <svg ref={ref} width={width} height={height + 30}></svg>;
+    return <svg ref={ref} width={width} height={height + 30}>
+        
+    </svg>;
 };
 export default ZoomableTreemap;

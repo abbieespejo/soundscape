@@ -214,8 +214,9 @@ const MultiSeriesLineChart = () => {
 
 
         svg.append("g")
-            .attr("transform", `translate(0,${height - marginBottom})`)
-            .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0).tickFormat(d3.format("~f")));
+
 
         // Format Y Axis Labels to Reflect Actual Values
         svg.append("g")

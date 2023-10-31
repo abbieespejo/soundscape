@@ -3,7 +3,7 @@ import "./HomeLanding.css";
 import Lottie from "lottie-react";
 import analysingInfographics from "../assets/analysing-inforgraphics.json"; // Adjust the path to your JSON file
 
-const HomeLanding = () => {
+const HomeLanding = ({ scrollToBarChart }) => {
   return (
     <div className="gradient-box">
       <div className="landing-box-wrapper">
@@ -19,7 +19,7 @@ const HomeLanding = () => {
               represent a rich dataset of the top Spotify tracks spanning the
               years 1999 to 2019.
             </p>
-            <button id="landing-box-button">
+            <button id="landing-box-button" onClick={scrollToBarChart}>
               <span className="button-text">Get started</span>
             </button>
           </div>

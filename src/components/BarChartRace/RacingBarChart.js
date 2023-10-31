@@ -3,7 +3,7 @@ import data from "../../data/processed_data_v2.json";
 import BarChart from "./BarChart";
 import "./BarChart.css";
 
-const RacingBarChart = () => {
+const RacingBarChart = React.forwardRef((props, ref) => {
   const startYear = 1999;
   const endYear = 2019;
   const randomColor = () => {
@@ -38,7 +38,7 @@ const RacingBarChart = () => {
   );
 
   return (
-    <div className="bar-chart-container">
+    <div className="bar-chart-container" ref={ref}>
         <BarChart
           startYear={startYear}
           endYear={endYear}
@@ -70,5 +70,5 @@ const RacingBarChart = () => {
         />
       </div>
   );
-};
+});
 export default RacingBarChart;
