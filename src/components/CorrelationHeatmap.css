@@ -11,3 +11,35 @@
     -moz-osx-font-smoothing: grayscale;
     font-size: 0.8em;
 }
+
+.heatmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed for spacing */
+  }
+  
+  .title {
+    margin-bottom: 20px; /* Adjust as needed for spacing */
+  }
+  
+  .svg-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* May adjust this to control the width of the SVG on the screen */
+  }
+
+  .map-description {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 8em;
+  }
+  
+  .map-description p {
+    margin: 0;
+    font-size: 14px;
+    color: #666; /* Or any color you prefer */
+    /* any additional styles you want to add */
+  }
+  

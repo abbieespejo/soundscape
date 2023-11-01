@@ -17,7 +17,7 @@ const CorrelationHeatmap = () => {
       console.log('DATA HAS BEEN LOADED', data);
     });
   }, []);
-  
+
 
   const interestedFields = ["duration_ms", "year", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo"];
 
@@ -52,7 +52,7 @@ const CorrelationHeatmap = () => {
 
   const svgRef = useRef();
   const svg = d3.select(svgRef.current);
-    const tooltip = d3.select(tooltipRef.current);
+  const tooltip = d3.select(tooltipRef.current);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -78,7 +78,7 @@ const CorrelationHeatmap = () => {
       .attr("stop-color", "#ffffff");
 
     // Define the margins with enough space for axis labels
-    const margin = { top: 120, right: 20, bottom: 50, left: 120 }; // Increased top margin
+    const margin = { top: 120, right: 20, bottom: 15, left: 120 }; // Increased top margin
     const width = 700 - margin.left - margin.right;
     const height = 700 - margin.top - margin.bottom;
 
@@ -186,7 +186,7 @@ const CorrelationHeatmap = () => {
       .domain([1, -1]);
 
     const legendAxis = d3.axisRight(legendScale)
-      .ticks(5) 
+      .ticks(5)
       .tickFormat(d3.format(".1f"));
 
     // Draw the legend axis
@@ -200,13 +200,18 @@ const CorrelationHeatmap = () => {
 
 
   return (
-    <div>
-      <h1>Correlation heatmap</h1>
-      {/* Implement your D3.js Plotting code here */}
-      <svg ref={svgRef} width={1000} height={1000}></svg>
+    <div className="heatmap-container">
+      <h1 className="title">Song Characteristics Correlation Heatmap</h1>
+      <div className="svg-container">
+        <svg ref={svgRef} width={1000} height={700}></svg>
+      </div>
+      <div className="map-description">
+        <p>The correlation values range from -1 to 1. A value close to 1 implies a strong positive correlation, 
+        whereas a value close to -1 implies a strong negative correlation. A value around 0 implies no correlation.</p>
+      </div>
       <div ref={tooltipRef} className="tooltip" style={{ opacity: 0 }}></div>
     </div>
-  );
+  );  
 };
 
 export default CorrelationHeatmap;
