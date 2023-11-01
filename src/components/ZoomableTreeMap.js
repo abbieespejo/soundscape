@@ -54,7 +54,7 @@ const ZoomableTreemap = ({ width = 2000, height = 850, padding = 20 }) => {
         function mouseover(event, d) {
             console.log("Mouseover event triggered for", d);
             tooltip.transition().duration(200).style("opacity", 1); // Show the tooltip
-            tooltip.html(`Name: ${name(d)}<br>Value: ${format(d.value)}`)
+            tooltip.html(`Name: ${name(d)}<br>Popularity Score: ${format(d.value)}`)
                 .style("left", `${event.pageX + 5}px`)
                 .style("top", `${event.pageY + 5}px`);
         }
@@ -83,9 +83,6 @@ const ZoomableTreemap = ({ width = 2000, height = 850, padding = 20 }) => {
             node.filter(d => d === root ? d.parent : d.children)
                 .attr("cursor", "pointer")
                 .on("click", (event, d) => d === root ? zoomout(root) : zoomin(d));
-
-            node.append("title")
-                .text(d => `${name(d)}\n${format(d.value)}`);
 
                 node.append("rect")
                 .attr("id", d => d.leafUid = `leaf_${uuidv4()}`)

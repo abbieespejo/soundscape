@@ -1,0 +1,13 @@
+.y-axis {
+    font-family: 'Karla';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 0.8em;
+}
+
+.x-axis {
+    font-family: 'Karla';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 0.8em;
+}

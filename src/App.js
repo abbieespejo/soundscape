@@ -23,7 +23,7 @@ const App = () => {
         {/* <RacingBarChart/> */}
         <AudioCharacteristics />
         <ZoomableTreemap />
-        {/* <CorrelationHeatmap /> */}
+        <CorrelationHeatmap />
         <MultiSeriesLineChart />
         
 
