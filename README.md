@@ -1,70 +1,18 @@
-# Getting Started with Create React App
+# Soundscape
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About
+In the era of music streaming platforms like Spotify, marketing tactics in the music industry have increasingly prioritised streaming activity to boost song popularity. Spotify stores extensive metadata about song characteristics, such as the measure of danceability. Soundscape, a React web application, aims to address the challenge of exploring available rich music ranking data by developing an interactive visualisation system using D3.js. By leveraging the song characteristics of the top 2,000 Spotify tracks spanning 1999 to 2019, Soundscape employs D3 and React JavaScript web-development tools to represent the data.
 
-## Available Scripts
+## Run project
 
-In the project directory, you can run:
+```bash
+# Run development
+npm start
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Soundscape UI
+<img width="1440" alt="Screenshot 2024-04-11 at 5 32 51 PM" src="https://github.com/abbieespejo/soundscape/assets/66059185/eddd61ff-344b-4388-8879-767a5a617039">
+<img width="1440" alt="Screenshot 2024-04-11 at 5 33 04 PM" src="https://github.com/abbieespejo/soundscape/assets/66059185/c2b6bd8e-c094-4655-a964-3c298b0ef83d">
+<img width="1440" alt="Screenshot 2024-04-11 at 5 33 13 PM" src="https://github.com/abbieespejo/soundscape/assets/66059185/ff2adc52-a643-4373-b491-3e5caf9e8359">
+<img width="1440" alt="Screenshot 2024-04-11 at 5 33 28 PM" src="https://github.com/abbieespejo/soundscape/assets/66059185/699e2a10-08a3-4090-8d49-73429015e3e6">
